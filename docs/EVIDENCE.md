@@ -13,7 +13,7 @@ This file records **observed** results only. A blank or NOT TESTED entry is not 
 | Cross-tenant / anonymous HTTP access denied in synthetic lab | PASS | Same cross-repository GitHub Action |
 | Provider and widget outages contained across processes | PASS | Same cross-repository GitHub Action |
 | Agent-scoped Git credentials denied across sibling repositories | NOT TESTED | Issue #5; all current work was performed with an authorised admin identity |
-| PostgreSQL cross-schema read/write denied using runtime roles | NOT TESTED | Issue #5 |
+| PostgreSQL cross-schema read/write denied using runtime roles | PASS (disposable database only) | [GitHub Actions run 43420555267](https://github.com/Bucifer6/module-isolation-lab/actions/runs/43420555267); four permitted own-schema operations and four forbidden cross-schema operations |
 | Independent container release and rollback under resource limits | NOT TESTED | Issue #5 |
 | Durable event bus, outbox and replay | NOT TESTED | Issue #5 |
 | Encrypted backup, complete restore and recovery reconciliation | NOT TESTED | Issue #5 |
