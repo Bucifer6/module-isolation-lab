@@ -1,0 +1,32 @@
+name: database-role-boundaries
+on:
+  push:
+    paths: ['scripts/prove-db-grants.sh', '.github/workflows/database-grants.yml']
+  pull_request:
+    paths: ['scripts/prove-db-grants.sh', '.github/workflows/database-grants.yml']
+  workflow_dispatch:
+permissions:
+  contents: read
+jobs:
+  postgres-isolation:
+    runs-on: ubuntu-latest
+    timeout-minutes: 12
+    services:
+      postgres:
+        image: postgres:16
+        env:
+          POSTGRES_PASSWORD: synthetic_only_admin_password
+          POSTGRES_DB: labdb
+        ports:
+          - 5432:5432
+        options: >-
+          --health-cmd "pg_isready -U postgres -d labdb"
+          --health-interval 3s
+          --health-timeout 3s
+          --health-retries 20
+    steps:
+      - uses: actions/checkout@v4
+      - name: Prove separate runtime database grants
+        env:
+          LAB_ADMIN_PASSWORD: synthetic_only_admin_password
+        run: bash scripts/prove-db-grants.sh
