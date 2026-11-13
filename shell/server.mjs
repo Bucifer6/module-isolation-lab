@@ -8,7 +8,7 @@ const server=http.createServer(async(req,res)=>{
   const response=await fetch(widget+'/manifest.json',{signal:AbortSignal.timeout(250)});
   if(response.ok){const m=await response.json();
    if(m.id==='demo-widget'&&m.version===1&&m.path==='/'&&typeof m.title==='string')
-    content='<h2>Synthetic Widget</h2><iframe sandbox="" title="Synthetic Widget" src="/extensions/demo-widget"></iframe>';
+    content='<h2>Synthetic Widget</h2><iframe sandbox="" title="Synthetic Widget" src="'+widget+'/"> </iframe>';
   }
  }catch{}
  res.writeHead(200,{'content-type':'text/html; charset=utf-8','cache-control':'no-store'});
