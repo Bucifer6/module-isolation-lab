@@ -1,0 +1,37 @@
+name: cross-repository-contracts
+on:
+  push:
+    paths:
+      - 'tests/cross-repo.mjs'
+      - '.github/workflows/cross-repo.yml'
+  pull_request:
+    paths:
+      - 'tests/cross-repo.mjs'
+      - '.github/workflows/cross-repo.yml'
+  workflow_dispatch:
+permissions:
+  contents: read
+jobs:
+  integration:
+    runs-on: ubuntu-latest
+    timeout-minutes: 12
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          path: lab
+      - uses: actions/checkout@v4
+        with:
+          repository: Bucifer6/component-alpha
+          path: component-alpha
+      - uses: actions/checkout@v4
+        with:
+          repository: Bucifer6/component-beta
+          path: component-beta
+      - uses: actions/checkout@v4
+        with:
+          repository: Bucifer6/component-shell
+          path: component-shell
+      - uses: actions/setup-node@v4
+        with:
+          node-version: '22'
+      - run: node --test lab/tests/cross-repo.mjs
